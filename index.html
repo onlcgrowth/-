@@ -1,0 +1,104 @@
+<html>
+<head>
+	<title>
+		Dev101 Session2
+	</title>
+	<!-- <link rel="stykesheet" href="styles.css"> -->
+	<style>
+		.employee_name {
+			display: inline;
+		}
+
+		li
+		{
+			margin-top: 3px;
+			margin-bottom: 3px;
+		}
+
+	</style>
+	<script type="application/javascript">
+		function setEditMode(employee_id) {
+			var employee_element = document.getElementById(employee_id);
+			var name_object = employee_element.children[0];
+			var employee_name = name_object.innerText;
+			var surname_object = employee_element.children[1];
+			var employee_surname = surname_object.innerText;
+			var edit_button_container = employee_element.children[2];
+
+			name_object.innerHTML = "<input type='text' value='" + employee_name + "'>";
+			surname_object.innerHTML = "<input type='text' value='" + employee_surname + "'>";
+
+			edit_button_container.innerHTML = "<button onclick=\"setViewMode('"+employee_id+"');\">Save</button>";
+
+			return true;
+
+		}
+
+		function setViewMode(employee_id) {
+			var employee_element = document.getElementById(employee_id);
+			var name_object = employee_element.children[0];
+			var employee_name_input = name_object.children[0];
+			var employee_name = employee_name_input.value;
+			var surname_object = employee_element.children[1];
+			var employee_surname_input = surname_object.children[0];
+			var employee_surname = employee_surname_input.value;
+			var edit_button_container = employee_element.children[2];
+
+			name_object.innerHTML = employee_name;
+			surname_object.innerHTML = employee_surname;
+
+			edit_button_container.innerHTML = "<button onclick=\"setEditMode('"+employee_id+"');\">Edit</button>";
+
+			return true;
+
+		}
+
+		var last_id_number = 1;
+
+		function addEmployee(){
+
+			last_id_number++;
+			new_id_number = last_id_number;
+			var new_employee_id = "employee"+last_id_number; //employee2 
+
+			var list_object = document.getElementById("employees_all");
+			
+			var new_employee_html = "\
+				<div class='employee' id='"+new_employee_id+"'>\
+					<div class='employee_name'>\
+						<input type='text'>\
+					</div>\
+					<div class='employee_name'>\
+						<input type='text'>\
+					</div>\
+					<div class='employee_name'>\
+						<button onClick=\"setViewMode('"+new_employee_id+"')\">\
+							Save\
+						</button>\
+					</div>"
+
+			var new_employee_list_item = document.createElement('li');
+			new_employee_list_item.innerHTML = new_employee_html;
+
+			list_object.append(new_employee_list_item);
+
+		}
+
+	</script>
+</head>
+<div class="maincontent">
+	<ol class="employees" id="employees_all">
+		<li>
+			<div class="employee" id="employee1">
+				<div class="employee_name">Вася</div>
+				<div class="employee_name">Пупкин</div>
+				<div class="employee_name">
+					<button onClick="setEditMode('employee1');" id="button_employee1">Edit</button>
+				</div>
+			</div>
+		</li>
+	</ol>
+
+	<button onClick="addEmployee();">Add</button>
+</div>
+</html>
